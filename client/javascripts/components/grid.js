@@ -4,16 +4,13 @@ var ReactDOM = require('react-dom');
 class Grid extends React.Component{
   constructor (props) {
     super(props);
-    this.state = {
-
-    }
   }
 
   render () {
     return (
-
+      <div></div>
     );
   }
 }
 
-module.exports = Word;
+module.exports = Grid;
