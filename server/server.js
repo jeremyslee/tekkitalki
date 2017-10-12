@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 var mcache = require('memory-cache');
 var path = require('path');
 
-const mongoURI ='mongodb://localhost/databaseName';
+const mongoURI = process.env.DATABASE_URL;
 mongoose.connect(mongoURI, { useMongoClient: true });
 
 app.use(function(req, res, next) {
