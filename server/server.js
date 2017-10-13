@@ -52,6 +52,10 @@ app.get('/', (req, res) => {
 
 app.get('/find', cache(10), commandController.findCommand);
 
+app.get('/commands', cache(10), commandController.findAll);
+
+app.post('/command', commandController.addCommand); 
+
 app.listen(3000);
 
 module.exports = app;
