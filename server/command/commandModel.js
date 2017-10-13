@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const commandSchema = new Schema({
-  text: {type: String, required: true, unique: true},
+  commands:  [{type: String, required: true, unique: true}],
+  commandString: {type: String, required: true, unique: true} ,
+  code: {type: String, required: true},
+  fn: {type: String, required: true}
 });
 
 module.exports = mongoose.model('Command', commandSchema);
