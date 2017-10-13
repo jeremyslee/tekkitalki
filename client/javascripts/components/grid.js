@@ -16,11 +16,11 @@ class Grid extends React.Component{
     let self = this;
     self.setState({speech: ''})
     artyom.initialize({
-                  lang:"en-GB",
-                  continuous:false,
-                  listen:true,
-                  debug:true,
-                  speed:1
+        lang:"en-GB",
+        continuous:false,
+        listen:true,
+        debug:true,
+        speed:1
               }).then(function(){
                   console.log("Ready to work !");
               })
