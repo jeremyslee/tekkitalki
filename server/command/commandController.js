@@ -3,7 +3,6 @@ const commandController = {};
 
 commandController.findCommand = (req, res) => {
     let text = new RegExp(req.query.command);
-
     Command.findOne({ commandString: text }, (err, result) => {
       if (err) console.log(err);
       if (result) res.send(result);
@@ -18,6 +17,17 @@ commandController.addCommand = (req, res) => {
         if (err) console.log('Error: could not save');
         console.log("Saved successfully");
     });
-}
+};
+
+commandController.findAll = (req, res) => {
+    Command.find({}, (err, result) => {
+        if (err) console.log(err);
+        let flatArr = result.reduce((acc, curr) => {
+            return acc = acc.concat(curr.commands);
+        },[]);
+        res.send(flatArr);
+    });
+};
+
 
 module.exports = commandController;
