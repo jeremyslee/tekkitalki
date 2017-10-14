@@ -22,7 +22,7 @@ class Grid extends React.Component{
       insertWhere: 0,
       listenFail: false
     }
-    this.oneCommand = this.oneCommand.bind(this);
+    this.clickListen = this.clickListen.bind(this);
     this.camelize = this.camelize.bind(this);
     this.getLineNumber = this.getLineNumber.bind(this);
     this.numWords = { 'one': 1, 'two': 2, 'to': 2, 'too': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 };
@@ -32,7 +32,7 @@ class Grid extends React.Component{
     let string = this.state.speech.trim();
     let insertWhere;
     let numWords = this.numWords;
-    string = string.replace('the clara', 'declare a').replace('sinclair', 'declare');
+    string = string.replace('the clara', 'declare a').replace('sinclair', 'declare').replace('declare of', 'declare a').replace('tonsil', 'console');
     [string, insertWhere] = this.getLineNumber(string);
 
     let self = this;
@@ -118,34 +118,42 @@ class Grid extends React.Component{
     }).replace(/\s+/g, '');
   }
 
-  oneCommand() {
+  clickListen() {
     let self = this;
-    self.setState({
-      speech: '',
-      listening: true,
-      listenFail: false
-    })
-    artyom.initialize({
-      lang:"en-GB",
-      continuous:false,
-      listen:true,
-      debug:false,
-      speed:1
-    }).then(function(){
-      console.log("Ready to work !");
-    });
-
-    artyom.on(['*'] , true).then((i, result) => {
-      self.setState({
-        speech: result,
-        listening: false
-      });
-      // artyom.say("There you go!");
+    if (self.state.listening) {
       artyom.fatality();
-      setTimeout(function() {
-        self.parseSpeech();
-      }, 0);
-    });
+      self.setState({
+        listening: false,
+        listenFail: false
+      })
+    }
+    else {
+      self.setState({
+        speech: '',
+        listening: true,
+        listenFail: false
+      })
+      artyom.initialize({
+        lang:"en-GB",
+        continuous:false,
+        listen:true,
+        debug:false,
+        speed:1
+      }).then(function(){
+        console.log("Ready to work !");
+      });
+
+      artyom.on(['*'] , true).then((i, result) => {
+        self.setState({
+          speech: result,
+          listening: false
+        });
+        artyom.fatality();
+        setTimeout(function() {
+          self.parseSpeech();
+        }, 0);
+      });
+    }
   }
 
   componentDidMount() {
@@ -168,7 +176,7 @@ class Grid extends React.Component{
     return (
       <div>
         <Editor loaded={this.state.loaded} onPageCode={this.state.onPageCode} lineCount={this.state.lineCount} />
-        <Input loaded={this.state.loaded} oneCommand={this.oneCommand} speech={this.state.speech} listening={this.state.listening} listenFail={this.state.listenFail} />
+        <Input loaded={this.state.loaded} clickListen={this.clickListen} speech={this.state.speech} listening={this.state.listening} listenFail={this.state.listenFail} />
       </div>
     );
   }
