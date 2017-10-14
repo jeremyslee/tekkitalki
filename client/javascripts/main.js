@@ -5,7 +5,7 @@ const Grid = require('./components/grid');
 class App extends React.Component {
   render() {
     return (
-      <Grid />
+      <Grid baseUrl="http://localhost:3000" />
     )
   }
 }
