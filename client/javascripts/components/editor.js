@@ -1,7 +1,7 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
+const { Component } = require('react');
 
-class Editor extends React.Component {
+class Editor extends Component {
   constructor (props) {
     super(props);
   }
