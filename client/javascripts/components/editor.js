@@ -7,6 +7,10 @@ class Editor extends React.Component{
   }
 
   render () {
+    let html = '';
+    this.props.onPageCode.forEach((el) => {
+      html += el;
+    });
     return (
       <div id="editor" className={this.props.loaded ? "editor loaded" : "editor"}>
         <div className="editor-left-bg"></div>
@@ -22,8 +26,8 @@ class Editor extends React.Component{
           <li></li>
         </ol>
         <div className="editor-code">
-          <p>let i = 0;</p>
-          <p>console.log('hello');</p>
+          {/* <p>{this.props.onPageCode}</p> */}
+          <div dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </div>
     );

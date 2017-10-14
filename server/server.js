@@ -4,6 +4,9 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 const commandController = require('./command/commandController');
 const mongoose = require('mongoose');
 
@@ -54,7 +57,7 @@ app.get('/find', cache(10), commandController.findCommand);
 
 app.get('/commands', cache(10), commandController.findAll);
 
-app.post('/command', commandController.addCommand); 
+app.post('/command', commandController.addCommand);
 
 app.listen(3000);
 

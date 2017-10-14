@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "artyom.js": "^1.0.6",
+    "body-parser": "^1.18.2",
     "browserify": "^14.4.0",
     "chai": "^2.3.0",
     "dotenv": "^4.0.0",

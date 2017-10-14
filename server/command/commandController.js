@@ -14,8 +14,14 @@ commandController.addCommand = (req, res) => {
     let cmdToSave = req.body;
     let command = new Command(cmdToSave);
     command.save((err) => {
-        if (err) console.log('Error: could not save');
-        console.log("Saved successfully");
+        if (err) {
+          // console.log(err);
+          res.send(err);
+        }
+        else {
+          // console.log("Saved successfully");
+          res.send({'Message':'Success'});
+        }
     });
 };
 
