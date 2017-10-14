@@ -101,6 +101,10 @@ ol:first-child {
   border-right: 1px solid #E4E4E4;
 }
 
+.bigger-line-nums {
+  width: 36px;
+}
+
 .editor-code {
   padding-left: 50px;
 }
