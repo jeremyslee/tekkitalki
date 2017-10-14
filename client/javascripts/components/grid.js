@@ -16,7 +16,8 @@ class Grid extends React.Component{
       allCommands: [],
       existingVars: [],
       commandVars: [],
-      onPageCode: []
+      onPageCode: [],
+      lineCount: 9
     }
     this.oneCommand = this.oneCommand.bind(this);
     this.camelize = this.camelize.bind(this);
@@ -50,6 +51,10 @@ class Grid extends React.Component{
         else {
           let obj = JSON.parse(xhr.responseText);
           eval(obj.fn);
+
+          self.setState({
+            lineCount: Math.max(self.state.onPageCode.length, 9)
+          })
         }
       }
     }
@@ -111,7 +116,7 @@ class Grid extends React.Component{
   render () {
     return (
       <div>
-        <Editor loaded={this.state.loaded} onPageCode={this.state.onPageCode} />
+        <Editor loaded={this.state.loaded} onPageCode={this.state.onPageCode} lineCount={this.state.lineCount} />
         <Input loaded={this.state.loaded} oneCommand={this.oneCommand} speech={this.state.speech} listening={this.state.listening} />
       </div>
     );

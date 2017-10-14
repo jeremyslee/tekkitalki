@@ -11,19 +11,15 @@ class Editor extends React.Component{
     this.props.onPageCode.forEach((el) => {
       html += el;
     });
+    let lineNumbers = [];
+    for (let i = 0; i < this.props.lineCount; i += 1) {
+      lineNumbers.push(<li></li>)
+    }
     return (
       <div id="editor" className={this.props.loaded ? "editor loaded" : "editor"}>
         <div className="editor-left-bg"></div>
         <ol>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {lineNumbers}
         </ol>
         <div className="editor-code">
           {/* <p>{this.props.onPageCode}</p> */}
