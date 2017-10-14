@@ -28,13 +28,14 @@ class Grid extends React.Component{
     let string = this.state.speech.trim();
     let insertWhere;
     let matchLine;
-    let numWords = { 'one': 1, 'two': 2, 'to': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 }
+    let numWords = { 'one': 1, 'two': 2, 'to': 2, 'too': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 }
 
     // regex returns array ['line number 5', '5']
     matchLine = string.match(/(?:on line number\ *)(\w+)/);
     if (!matchLine) matchLine = string.match(/(?:on line\ *)(\w+)/);
     if (!matchLine) matchLine = string.match(/(?:online number\ *)(\w+)/);
     if (!matchLine) matchLine = string.match(/(?:online\ *)(\w+)/);
+    if (!matchLine) matchLine = string.match(/(?:on mine\ *)(\w+)/);
     if (matchLine && matchLine.length > 1) {
       insertWhere = parseInt(matchLine[1]);
       if (isNaN(insertWhere)) insertWhere = parseInt(numWords[matchLine[1]]);
@@ -42,7 +43,7 @@ class Grid extends React.Component{
     }
     if (insertWhere === undefined) insertWhere = this.state.onPageCode.length + 2;
 
-    string = string.replace(/(?:on line number\ *)(\w+)/, '').replace(/(?:on line\ *)(\w+)/, '');
+    string = string.replace(/(?:on line number\ *)(\w+)/, '').replace(/(?:on line\ *)(\w+)/, '').replace(/(?:online number\ *)(\w+)/, '').replace(/(?:online\ *)(\w+)/, '').replace(/(?:on mine\ *)(\w+)/, '');
     let self = this;
     const commands = this.state.allCommands;
     for (let i = 0; i < commands.length; i += 1) {
