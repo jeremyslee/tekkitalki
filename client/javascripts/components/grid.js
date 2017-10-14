@@ -15,6 +15,7 @@ class Grid extends React.Component{
       listening: false,
       allCommands: [],
       existingVars: [],
+      existingFuncs: [],
       commandVars: [],
       onPageCode: [],
       lineCount: 9,
