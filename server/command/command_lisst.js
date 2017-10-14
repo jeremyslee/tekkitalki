@@ -37,5 +37,19 @@
 	"commands": ["declare a function called", "create a function called", "define a function called"],
 	"commandString": "declare a function called, create a function called, define a function called",
 	"code": "function ??() {",
-	"fn": "let funcName = self.state.commandVars.slice(-1)[0]; if (variable === undefined) variable = 'foo'; let code = obj.code; code = code.replace('??', self.camelize(funcName)); let arr = self.state.onPageCode; arr.splice(self.state.insertWhere - 1, 0, '<p>' + code + '</p>'); arr.splice(self.state.insertWhere, 0, '<p>&nbsp;</p>'); arr.splice(self.state.insertWhere + 1, 0, '<p>};</p>'); self.setState({ onPageCode: arr, commandVars: self.state.commandVars.slice(0, self.state.commandVars.length - 1), existingVars: self.state.existingVars.concat(self.camelize(funcName)) });"
+	"fn": "let funcName = self.state.commandVars.slice(-1)[0]; if (variable === undefined) variable = 'foo'; let code = obj.code; code = code.replace('??', self.camelize(funcName)); let arr = self.state.onPageCode; arr.splice(self.state.insertWhere - 1, 0, '<p>' + code + '</p>'); arr.splice(self.state.insertWhere, 0, '<p>&nbsp;</p>'); arr.splice(self.state.insertWhere + 1, 0, '<p>};</p>'); self.setState({ onPageCode: arr, commandVars: self.state.commandVars.slice(0, self.state.commandVars.length - 1), existingFuncs: self.state.existingFuncs.concat(self.camelize(funcName)) });"
+}
+
+{
+	"commands": ["indent line number", "indent line"],
+	"commandString": "indent line number, indent line",
+	"code": "INDENTED",
+	"fn": "let lineNumber = parseInt(self.state.commandVars.slice(-1)[0]); if (isNaN(lineNumber)) lineNumber = parseInt(numWords[self.state.commandVars.slice(-1)[0]]); let arr = self.state.onPageCode; arr[lineNumber - 1] = arr[lineNumber - 1].replace('<p>', '<p><indent />'); self.setState({ onPageCode: arr, commandVars: self.state.commandVars.slice(0, self.state.commandVars.length - 1) });"
+}
+
+{
+	"commands": ["return"],
+	"commandString": "return",
+	"code": "return ??;",
+	"fn": "let code = obj.code; let variable = self.state.commandVars.slice(-1)[0]; if (variable === undefined) { variable = '' } else if (self.state.existingVars.indexOf(self.camelize(variable)) > -1) { variable = self.camelize(variable); } else { variable = '&#39;' + variable + '&#39;'; } code = code.replace('??', variable); let arr = self.state.onPageCode; arr.splice(self.state.insertWhere - 1, 0, '<p>' + code + '</p>'); self.setState({ onPageCode: arr, commandVars: self.state.commandVars.slice(0, self.state.commandVars.length - 1) });"
 }
