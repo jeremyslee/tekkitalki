@@ -13,7 +13,7 @@ class Editor extends React.Component{
     });
     let lineNumbers = [];
     for (let i = 0; i < this.props.lineCount; i += 1) {
-      lineNumbers.push(<li></li>)
+      lineNumbers.push(<li key={i}></li>)
     }
     return (
       <div id="editor" className={this.props.loaded ? "editor loaded" : "editor"}>

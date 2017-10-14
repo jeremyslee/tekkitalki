@@ -24,14 +24,18 @@ class Grid extends React.Component{
   }
 
   parseSpeech() {
-    let string = this.state.speech;
+    let string = this.state.speech.trim();
     let self = this;
+    let numWords = { 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 }
     const commands = this.state.allCommands;
     for (let i = 0; i < commands.length; i += 1) {
       if (string.indexOf(commands[i]) > -1) {
-        this.setState({
-          commandVars: this.state.commandVars.concat(string.replace(commands[i], '').trim())
-        });
+        let variable = string.replace(commands[i], '').trim();
+        if (variable.length) {
+          this.setState({
+            commandVars: this.state.commandVars.concat(variable)
+          });
+        }
         string = commands[i]
         break;
       }
@@ -47,10 +51,25 @@ class Grid extends React.Component{
       if (xhr.readyState == 4 && xhr.status == 200) {
         if (xhr.responseText === 'NA') {
           console.log('No such command.');
+
+          artyom.initialize({
+                        lang:"en-GB",
+                        continuous:false,
+                        listen:false,
+                        debug:false,
+                        speed:1
+                    }).then(function(){
+                        artyom.say('Sorry, your technical communication is poor.');
+                    })
         }
         else {
           let obj = JSON.parse(xhr.responseText);
           eval(obj.fn);
+
+
+
+
+
 
           self.setState({
             lineCount: Math.max(self.state.onPageCode.length, 9)
