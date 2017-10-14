@@ -10,7 +10,6 @@ const commandSchema = new Schema({
 
 
 commandSchema.pre('save', function(next) {
-  console.log(this.commands);
   this.commandString = this.commands.join(',');
   next();
 });
