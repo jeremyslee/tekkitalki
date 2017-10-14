@@ -17,7 +17,8 @@ class Grid extends React.Component{
       existingVars: [],
       commandVars: [],
       onPageCode: [],
-      lineCount: 9
+      lineCount: 9,
+      insertWhere: 0
     }
     this.oneCommand = this.oneCommand.bind(this);
     this.camelize = this.camelize.bind(this);
@@ -25,15 +26,32 @@ class Grid extends React.Component{
 
   parseSpeech() {
     let string = this.state.speech.trim();
+    let insertWhere;
+    let matchLine;
+    let numWords = { 'one': 1, 'two': 2, 'to': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 }
+
+    // regex returns array ['line number 5', '5']
+    matchLine = string.match(/(?:on line number\ *)(\w+)/);
+    if (!matchLine) matchLine = string.match(/(?:on line\ *)(\w+)/);
+    if (!matchLine) matchLine = string.match(/(?:online number\ *)(\w+)/);
+    if (!matchLine) matchLine = string.match(/(?:online\ *)(\w+)/);
+    if (matchLine && matchLine.length > 1) {
+      insertWhere = parseInt(matchLine[1]);
+      if (isNaN(insertWhere)) insertWhere = parseInt(numWords[matchLine[1]]);
+      if (isNaN(insertWhere)) insertWhere = undefined;
+    }
+    if (insertWhere === undefined) insertWhere = this.state.onPageCode.length + 2;
+
+    string = string.replace(/(?:on line number\ *)(\w+)/, '').replace(/(?:on line\ *)(\w+)/, '');
     let self = this;
-    let numWords = { 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'for' : 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10, 'eleven': 11, 'twelve': 12, 'thirteen': 13, 'fourteen': 14, 'fifteen': 15 }
     const commands = this.state.allCommands;
     for (let i = 0; i < commands.length; i += 1) {
       if (string.indexOf(commands[i]) > -1) {
         let variable = string.replace(commands[i], '').trim();
         if (variable.length) {
           this.setState({
-            commandVars: this.state.commandVars.concat(variable)
+            commandVars: this.state.commandVars.concat(variable),
+            insertWhere: insertWhere
           });
         }
         string = commands[i]
@@ -42,6 +60,7 @@ class Grid extends React.Component{
     }
     console.log('command to find ', string);
     console.log('vars to keep ', this.state.commandVars);
+    console.log('insert at', this.state.insertWhere);
     // LOOK UP COMMAND IN DB
 
     let xhr = new XMLHttpRequest();
