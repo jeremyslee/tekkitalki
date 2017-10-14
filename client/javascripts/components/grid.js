@@ -18,7 +18,8 @@ class Grid extends React.Component{
       commandVars: [],
       onPageCode: [],
       lineCount: 9,
-      insertWhere: 0
+      insertWhere: 0,
+      listenFail: false
     }
     this.oneCommand = this.oneCommand.bind(this);
     this.camelize = this.camelize.bind(this);
@@ -80,16 +81,14 @@ class Grid extends React.Component{
                         speed:1
                     }).then(function(){
                         artyom.say('Sorry, your technical communication is poor.');
+                        self.setState({
+                          listenFail: true
+                        });
                     })
         }
         else {
           let obj = JSON.parse(xhr.responseText);
           eval(obj.fn);
-
-
-
-
-
 
           self.setState({
             lineCount: Math.max(self.state.onPageCode.length, 9)
@@ -111,7 +110,8 @@ class Grid extends React.Component{
     let self = this;
     self.setState({
       speech: '',
-      listening: true
+      listening: true,
+      listenFail: false
     })
     artyom.initialize({
                   lang:"en-GB",
@@ -156,7 +156,7 @@ class Grid extends React.Component{
     return (
       <div>
         <Editor loaded={this.state.loaded} onPageCode={this.state.onPageCode} lineCount={this.state.lineCount} />
-        <Input loaded={this.state.loaded} oneCommand={this.oneCommand} speech={this.state.speech} listening={this.state.listening} />
+        <Input loaded={this.state.loaded} oneCommand={this.oneCommand} speech={this.state.speech} listening={this.state.listening} listenFail={this.state.listenFail} />
       </div>
     );
   }
