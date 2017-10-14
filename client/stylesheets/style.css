@@ -48,10 +48,6 @@ img {
   max-width: 1000px;
   margin: 40px auto;
   position: relative;
-  border: 1px solid #E4E4E4;
-  border-radius: 10px;
-  box-shadow: 0 0 25px 1px rgba(0,0,0,.07), 1px 2px 35px 1px rgba(0,0,0,.04);
-  overflow: hidden;
 
   opacity: 0;
   -webkit-transform: translate3d(0,20px,0);
@@ -59,12 +55,6 @@ img {
   transition: all .5s ease;
   -webkit-transition-delay: .3s;
   transition-delay: .3s;
-}
-
-.loaded {
-  opacity: 1;
-  -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0,0,0);
 }
 
 ol {
@@ -102,7 +92,7 @@ ol:first-child {
 }
 
 .bigger-line-nums {
-  width: 36px;
+  width: 38px;
 }
 
 .editor-code {
@@ -115,29 +105,38 @@ p {
   font-size: 18px;
 }
 
-#input-display {
+.input-display {
   width: 100%;
   height: 70px;
-  line-height: 70px;
-  white-space: nowrap;
-  font-size: 20px;
-  padding: 0 80px 0 30px;
+  padding: 0 20px 0 20px;
+  opacity: 0;
+  -webkit-transform: translate3d(0,20px,0);
+  transform: translate3d(0,20px,0);
+  transition: all .5s ease;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+.input-display span {
+  color: #cdcdcd;
+  font-weight: 700;
 }
 
 .mic-icon {
-  position: absolute;
-  top: 0;
-  width: 70px;
-  height: 70px;
-  right: 0;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  display: block;
   appearance: none;
   border: none;
   border-left: 1px solid #E4E4E4;
-  border-radius: 0 10px 10px 0;
+  border-radius: 100px;
   background: rgba(255,255,255,0);
   cursor: pointer;
   transition: all .3s ease;
-
+  border: 1px solid #E4E4E4;
+  box-shadow: 0 0 25px 1px rgba(0,0,0,.07), 1px 2px 35px 1px rgba(0,0,0,.04);
 }
 
 .mic-icon:hover {
@@ -149,6 +148,36 @@ p {
 }
 
 .mic-icon img {
-  width: 35px;
-  line-height: 70px;
+  width: 45px;
+  line-height: 100px;
+}
+
+.loaded {
+  opacity: 1;
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+.indent {
+  display: inline-block;
+}
+
+.indent:first-child {
+  border-left: 1px solid #E4E4E4;
+}
+
+.indent:before {
+  content: "\00a0\00a0"
+}
+
+indent {
+  display: inline-block;
+}
+
+indent:first-child {
+  border-left: 1px solid #E4E4E4;
+}
+
+indent:before {
+  content: "\00a0\00a0"
 }

@@ -14,11 +14,10 @@ commandController.findCommand = (req, res) => {
 commandController.addCommand = (req, res) => {
   const cmdToSave = req.body;
   const command = new Command(cmdToSave);
-  command.save((err) => {
+  command.save((err, result) => {
     if (err) res.send(err);
     else {
-      // console.log("Saved successfully");
-      res.send({ Message: 'Success' });
+      res.send(result);
     }
   });
 };
